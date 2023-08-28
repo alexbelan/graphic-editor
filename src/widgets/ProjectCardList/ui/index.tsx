@@ -1,5 +1,7 @@
-import { ProjectCard } from "../../../entities/ProjectCard/ui";
+import { ProjectCard } from "entities/ProjectCard/ui";
+import { useAppSelector } from "app/store/hooks.ts";
 
 export const ProjectCardList = () => {
-  return Array.from(Array(3).keys()).map((card) => <ProjectCard key={card} />);
+  const { projects } = useAppSelector((state) => state.projects);
+  return projects.map((card) => <ProjectCard key={card} />);
 };
