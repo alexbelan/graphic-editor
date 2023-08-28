@@ -39,13 +39,27 @@ export const projectsSlice = createSlice({
             state.projects.push(action.payload);
         },
         deleteProject(state, action: PayloadAction<String>) {
-          console.log('deleteProject', action.payload);
-          
+            console.log("deleteProject", action.payload);
+
             state.projects = state.projects.filter(
                 (project) => project.id !== action.payload
             );
         },
+        updateProject(
+            state,
+            action: PayloadAction<{ id: string; data: IProjectCard }>
+        ) {
+            console.log("updateProject", action.payload);
+
+            const index = state.projects.findIndex(
+                (project) => project.id === action.payload.id
+            );
+            if (index !== -1) {
+                state.projects[index] = action.payload.data;
+            }
+        },
     },
 });
 
-export const { createProject, deleteProject } = projectsSlice.actions;
+export const { createProject, deleteProject, updateProject } =
+    projectsSlice.actions;

@@ -7,6 +7,7 @@ import {
     Menu,
     ActionIcon,
     rem,
+    Modal,
 } from "@mantine/core";
 import {
     IconDots,
@@ -16,9 +17,14 @@ import {
     IconPencil,
 } from "@tabler/icons-react";
 import { IProjectCard } from "../interfaces";
-import { deleteProject } from "widgets/ProjectCardList/model/slice";
+import {
+    deleteProject,
+    updateProject,
+} from "widgets/ProjectCardList/model/slice";
 import { store } from "app/store/store";
 import { Link, useNavigate } from "react-router-dom";
+import { EditProjectForm } from "shared/EditProjectForm";
+import { useState } from "react";
 
 type ProjectCardType = {
     project: IProjectCard;
@@ -26,6 +32,13 @@ type ProjectCardType = {
 
 export const ProjectCard: React.FC<ProjectCardType> = ({ project }) => {
     const navigate = useNavigate();
+    const [opened, setOpened] = useState(false);
+
+    const onSavehandler = (values: IProjectCard) => {
+        store.dispatch(updateProject({ id: project.id, data: values }));
+        setOpened(false);
+    };
+
     return (
         <MantineCard withBorder shadow="sm" radius="md">
             <MantineCard.Section withBorder inheritPadding py="xs">
@@ -54,7 +67,10 @@ export const ProjectCard: React.FC<ProjectCardType> = ({ project }) => {
                             >
                                 Download
                             </Menu.Item>
-                            <Menu.Item icon={<IconPencil size={rem(14)} />}>
+                            <Menu.Item
+                                icon={<IconPencil size={rem(14)} />}
+                                onClick={() => setOpened(true)}
+                            >
                                 Rename
                             </Menu.Item>
                             <Menu.Item
@@ -77,6 +93,14 @@ export const ProjectCard: React.FC<ProjectCardType> = ({ project }) => {
                     )}
                 </MantineCard.Section>
             </Link>
+            <Modal
+                opened={opened}
+                onClose={() => setOpened(false)}
+                title="Update project"
+                centered
+            >
+                <EditProjectForm onSave={onSavehandler} project={project} />
+            </Modal>
         </MantineCard>
     );
 };
