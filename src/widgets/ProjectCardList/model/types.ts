@@ -1,3 +1,5 @@
+import { IProjectCard } from "entities/ProjectCard";
+
 export type ProjectsState = {
-  projects: number[];
+    projects: IProjectCard[];
 };
