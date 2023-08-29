@@ -1,8 +1,7 @@
-import { ActionIcon as MantineActionIcon } from '@mantine/core';
-// import { IconAdjustments } from '@tabler/icons-react';
-import { PropsButton } from '../interfaces';
+import { ActionIcon as MantineActionIcon } from "@mantine/core";
+import { PropsButton } from "../interfaces";
 
-function IconButton({variant='default', icon, onClick}: PropsButton) {
+function IconButton({ variant = "default", icon, onClick }: PropsButton) {
   return (
     <MantineActionIcon variant={variant} onClick={onClick}>
       {icon}
@@ -10,4 +9,4 @@ function IconButton({variant='default', icon, onClick}: PropsButton) {
   );
 }
 
-export default IconButton
+export default IconButton;
